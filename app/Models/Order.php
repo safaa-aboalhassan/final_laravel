@@ -11,17 +11,41 @@ class Order extends Model
 
     
     protected $fillable = [
-        'order_number',
+        // 'order_number',
         'food_id',
         'quantity',
         'table_id',
-        'price',
+        'total_price',
+        
         
         
         
     ];
-
-    public function tables(){
-return $this->belongsToMany(Table::class);
+    protected static function booted()
+    {
+        static::creating(function ($order) {
+            $order->order_number = self::generateOrderNumber();
+        });
     }
+
+    public static function generateOrderNumber()
+    {
+       
+        return random_int(10, 199);
+    }
+
+    public function table(){
+return $this->belongsTo(Table::class);
+    }
+    
+
+    
+        public function food()
+        {
+            return $this->belongsTo(Food::class);
+        }
+    
+    
+
+
 }

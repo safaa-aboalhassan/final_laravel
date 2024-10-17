@@ -12,7 +12,7 @@ class Table extends Model
     protected $fillable = [
 
         'number',
-        'status',
+       
         
         
          

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
     $table->id();
-    $table->bigInteger('order_number');
+    $table->bigInteger('order_number')->unique();
     $table->foreignIdFor(Food::class);
     $table->foreignIdFor(Table::class);
-    $table->integer('quantity');
-    $table->decimal('price', 8, 2);  // Price of individual food item
+    $table->integer('quantity'); 
+    $table->integer('total_price');  
     $table->timestamps();
         });
     }

@@ -24,24 +24,26 @@
             </thead>
             <tbody>
                 @foreach ($foods as $food)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $food->name }}</td>
-                        <td><img src="{{ asset('storage/'.$food->image) }}" alt="{{ $food->name }}" width="50"></td>
-                        <td>{{ $food->category->name }}</td>
-                        <td>{{ $food->price }}</td>
-                        <td>{{ $food->created_at->format('d M Y, h:i A') }}</td>
-                        <td>
-                            <a href="{{ route('food.show', ['food' => $food->id]) }}">Show</a>
-                            <a href="{{ route('food.edit', ['food' => $food->id]) }}" class="text-warning">Update</a>
-                            <form action="{{ route('food.destroy', ['food' => $food->id]) }}" method="post" style="display:inline;">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $food->name }}</td>
+                    <td><img src="{{ asset('app/'. $food->image) }}" alt="{{ $food->name }}" width="50"></td>
+
+                    <td>{{ optional($food->category)->name }}</td> <!-- Safely handle null category -->
+                    <td>{{ $food->price }}</td>
+                    <td>{{ $food->created_at->format('d M Y, h:i A') }}</td>
+                    <td>
+                        <a href="{{ route('food.show', ['food' => $food->id]) }}">Show</a>
+                        <a href="{{ route('food.edit', ['food' => $food->id]) }}" class="text-warning">Update</a>
+                        <form action="{{ route('food.destroy', ['food' => $food->id]) }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            
             </tbody>
         </table>
 

@@ -19,7 +19,7 @@
 
 </section>
 <x-foot.footer />
-
+@yield('js')
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>

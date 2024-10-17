@@ -18,24 +18,7 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="status" class="form-label">table_status</label>
-            
-            <select class="form-select" id="status" name="table_status">
-    
-                    <option>available</option>
-                    <option>busy</option>
-                    
-            </select>
-
-
-
-            @error('table_status')
-            <div class="alert alert-danger" role="alert">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
+        
 
        
 

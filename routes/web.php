@@ -25,7 +25,10 @@ Route::get('/dashboard', function () {
 
 
 
-//rout gategory
+
+
+Route::middleware('auth')->group(function () {
+    //rout gategory
 Route::resource('category', CategoryController::class);
 
 //************* */
@@ -47,8 +50,6 @@ Route::resource('food', FoodController::class);
 Route::resource('order', OrderController::class);
 //************* */
 
-
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -64,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/chef/dashboard', [ChefController::class, 'dashboard'])
          ->middleware('role:chef');
          
-    Route::get('/waiter/dashboard', [WaiterController::class, 'dashboard'])
+    Route::get('/waiter/dashboard', [WitterController::class, 'dashboard'])
          ->middleware('role:waiter');
          
     Route::get('/', [AuthController::class, 'login'])->name('auth.login');
@@ -74,10 +75,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/sign-up', [AuthController::class, 'signup'])->name('auth.signup');
     
     Route::post('/sign-up', [AuthController::class, 'handle_signup'])->name('auth.handle.signup');
+    Route::get('login', [AuthController::class, 'handel_login'])->name('login');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
 });
 
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('login', [AuthController::class, 'login'])->name('login');
+
 
 
 require __DIR__.'/auth.php';

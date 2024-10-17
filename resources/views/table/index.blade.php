@@ -15,7 +15,7 @@
                 <tr>
                     <th>#</th>
                     <th>table number</th>
-                    <th> table status</th>
+                  
                     <th>Create at</th>
                     <th>Actions</th>
                 </tr>
@@ -26,7 +26,6 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$table->number}}</td>
-                        <td>{{$table->status}}</td>
                         <td>{{$table->created_at->format('d M Y , h:i A')}}</td>
                         <td>
                             <a href="{{ route('table.show',['table'=>$table->id]) }}">Show</a>

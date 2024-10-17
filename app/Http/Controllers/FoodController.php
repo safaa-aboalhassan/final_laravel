@@ -96,11 +96,11 @@ class FoodController extends Controller
             $imagePath = $request->file('image');
             $ext = $imagePath->getClientOriginalExtension();
             $randomName = Str::random(20) . '.' . $ext;
-            $imagePath->storeAs('public/categoryimg', $randomName);
+            $imagePath->storeAs('app/public/categoryimg', $randomName);
     
            
             if ($food->image) {
-                Storage::delete('public/foodimg/' . $food->image);
+                Storage::delete('app/public/foodimg/' . $food->image);
             }
     
            
@@ -125,7 +125,7 @@ class FoodController extends Controller
     public function destroy(Food $food)
     {
         if ($food->image) {
-            Storage::delete('public/foodimg/' . $food->image);
+            Storage::delete('app/public/foodimg/' . $food->image);
         }
     
        

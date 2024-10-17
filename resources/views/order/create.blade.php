@@ -1,50 +1,39 @@
 @extends('layouts.app')
 
 @section('body')
-    <h1>Create New order</h1>
+    <h1>Create New Order</h1>
 
     {{-- <x-form.validation-error /> --}}
 
     <form action="{{ route('order.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
-        <div class="mb-3">
-            <label for="Name" class="form-label">order number </label>
-            <input type="text" value="{{ old('order_number') }}" class="form-control" id="Name" name="order_number">
-            @error('order_number')
-            <div class="alert alert-danger" role="alert">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
-
         <div class="col-md-6">
-            <label for="food" class="form-label">food</label>
-            <select class="form-select" id="food" name="food">
-                <option>Select food</option>
+            <label for="food" class="form-label">Food</label>
+            <select class="form-select" id="food" name="food_id"> <!-- Changed name to food_id -->
+                <option value="" disabled selected>Select food</option> <!-- Added disabled attribute -->
 
                 @foreach ($foods as $food)
-                    <option {{ old('food') == $food->id ? 'selected' : '' }} value="{{ $food->id }}">
-                        {{ $food->name}}
+                    <option {{ old('food_id') == $food->id ? 'selected' : '' }} value="{{ $food->id }}">
+                        {{ $food->name }}
                     </option>
                 @endforeach
             </select>
-            @error('food')
+            @error('food_id') <!-- Changed to food_id -->
             <div class="alert alert-danger" role="alert">
                 {{ $message }}
             </div>
             @enderror
         </div>
 
-
         <div class="col-md-6">
-            <label for="table" class="form-label">table</label>
+            <label for="table" class="form-label">Table</label>
             <select class="form-select" id="table" name="table">
-                <option>Select food</option>
-
+                <option value="" disabled selected>Select table</option> <!-- Fixed option -->
+                
                 @foreach ($tables as $table)
                     <option {{ old('table') == $table->id ? 'selected' : '' }} value="{{ $table->id }}">
-                        {{ $table->number}}
+                        {{ $table->number }}
                     </option>
                 @endforeach
             </select>
@@ -56,20 +45,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="quantity" class="form-label">quantity </label>
-            <input type="text" value="{{ old('quantity') }}" class="form-control" id="quantity" name="quantity">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" value="{{ old('quantity') }}" class="form-control" id="quantity" name="quantity" min="1"> <!-- Changed type to number -->
             @error('quantity')
-            <div class="alert alert-danger" role="alert">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
-
-
-        <div class="mb-3">
-            <label for="price" class="form-label">price </label>
-            <input type="text" value="{{ old('price') }}" class="form-control" id="price" name="price">
-            @error('price')
             <div class="alert alert-danger" role="alert">
                 {{ $message }}
             </div>

@@ -15,8 +15,8 @@
                 <tr>
                     <th>#</th>
                     <th>Category name</th>
-                    <th>Category image</th>
                     <th>Category description</th>
+                    <th>Category image</th>
                     <th>Create at</th>
                     <th>Actions</th>
                 </tr>
@@ -24,23 +24,26 @@
             <tbody>
                 
                 @foreach ($categories as $category)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$category->name}}</td>
-                        <td>{{$category->description}}</td>
-                        <td>{{$category->image}}</td>
-                        <td>{{$category->created_at->format('d M Y , h:i A')}}</td>
-                        <td>
-                            <a href="{{ route('category.show',['category'=>$category->id]) }}">Show</a>
-                            <a href="{{ route('category.edit',['category'=>$category->id]) }}" class="text-warning">update</a>
-                            <form  action="{{ route('category.destroy',['category'=>$category->id]) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$category->name}}</td>
+                    <td>{{$category->description}}</td>
+                    <td>
+                        <img src="{{asset("$category->image")}}">
+                    </td>
+                    <td>{{$category->created_at->format('d M Y , h:i A')}}</td>
+                    <td>
+                        <a href="{{ route('category.show', ['category' => $category->id]) }}">Show</a>
+                        <a href="{{ route('category.edit', ['category' => $category->id]) }}" class="text-warning">Update</a>
+                        <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            
                 
             </tbody>
             
@@ -50,4 +53,8 @@
             {{$categories->render()}}
         </div> --}}
     </div>
+@endsection
+
+@section('js')
+<script src="{{asset('js/main.js')}}"></script>
 @endsection

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->BigInteger('number')->unique();
-            $table->string('status')->default('avaliable');
             $table->timestamps();
         });
     }

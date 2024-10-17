@@ -35,26 +35,29 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $request->validate([
-            'order_number' => 'required|string',
-            'food' => 'required|integer|exists:food,id',
-            'table' => 'required|integer|exists:tables,id',
-            'price' => 'required|string',
-            'quantity' => 'required|integer|min:1',
+        $validated = $request->validate([
+            'food_id' => 'required|exists:food,id', 
+            'table' => 'required|integer|exists:tables,id', 
+            'quantity' => 'required|integer|min:1', 
         ]);
     
-        // Create the order
-        Order::create([
-            'order_number' => $request->order_number,
-            'food_id' => $request->food,  // Using food (not food_id) to match the form field
-            'table_id' => $request->table, // Using table (not table_id) to match the form field
-            'price' => $request->price,
-            'quantity' => $request->quantity,
+        
+        $food = Food::find($validated['food_id']);
+        $totalPrice = $food->price * $validated['quantity'];
+    
+        // Create the new order
+        $order = Order::create([
+            'food_id' => $food->id, 
+            'table_id' => $validated['table'], 
+            'quantity' => $validated['quantity'], 
+            'total_price' => $totalPrice,
         ]);
     
         // Redirect with a success message
-        return redirect()->route('order.index')->with('message', 'Created Successfully!');
+        return redirect()->route('order.index')->with('message', 'Order Created Successfully!');
     }
+    
+    
     
 
     /**

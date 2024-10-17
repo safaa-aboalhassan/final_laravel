@@ -91,11 +91,11 @@ class CategoryController extends Controller
             $imagePath = $request->file('image');
             $ext = $imagePath->getClientOriginalExtension();
             $randomName = Str::random(20) . '.' . $ext;
-            $imagePath->storeAs('public/categoryimg', $randomName);
+            $imagePath->storeAs('app/categoryimg', $randomName);
     
            
             if ($category->image) {
-                Storage::delete('public/categoryimg/' . $category->image);
+                Storage::delete('app/categoryimg/' . $category->image);
             }
     
            
@@ -120,7 +120,7 @@ class CategoryController extends Controller
     {
         
         if ($category->image) {
-            Storage::delete('public/categoryimg/' . $category->image);
+            Storage::delete('app/categoryimg/' . $category->image);
         }
     
        
