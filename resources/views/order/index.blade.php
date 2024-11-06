@@ -26,25 +26,26 @@
             </thead>
             <tbody>
                 @foreach ($orders as $order)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $order->order_number }}</td>
-                        <td>{{ $order->table->number }}</td> <!-- Display table number -->
-                        <td>{{ $order->food->name }}</td> <!-- Display food name -->
-                        <td>{{ $order->quantity }}</td>
-                        <td>${{ $order->food->price }}</td> <!-- Format price with $ -->
-                        <td>${{ $order->total_price  }}</td> <!-- Format total price -->
-                        <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
-                        <td>
-                            <a href="{{ route('order.edit', ['order' => $order->id]) }}" class="btn btn-warning">Update</a>
-                            <form action="{{ route('order.destroy', ['order' => $order->id]) }}" method="post" style="display:inline;">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger" type="submit" aria-label="Delete Order">confirm</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $order->order_number }}</td>
+                    <td>{{ $order->table->number }}</td> <!-- Display table number -->
+                    <td>{{ optional($order->food)->name }}</td> <!-- Correct way to use optional() for food name -->
+                    <td>{{ $order->quantity }}</td>
+                    <td>${{ optional($order->food)->price }}</td> <!-- Format price with $ -->
+                    <td>${{ $order->total_price }}</td> <!-- Format total price -->
+                    <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
+                    <td>
+                        <a href="{{ route('order.edit', ['order' => $order->id]) }}" class="btn btn-warning">Update</a>
+                        <form action="{{ route('order.destroy', ['order' => $order->id]) }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" type="submit" aria-label="Delete Order">confirm</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            
             </tbody>
         </table>
 

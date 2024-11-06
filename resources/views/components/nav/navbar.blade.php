@@ -11,6 +11,9 @@
             <a class="nav-link active" aria-current="page" href="{{ route('food.index') }}">menu</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('user.index') }}">users</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ route('chef.index') }}">chef</a>
           </li>
           <li class="nav-item">

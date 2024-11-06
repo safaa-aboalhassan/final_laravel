@@ -9,45 +9,37 @@
     <div class="my-3">
         <a href="{{route('category.create')}}" class="btn btn-primary">Create new category</a>
     </div>
-    <div class="my-3 table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Category name</th>
-                    <th>Category description</th>
-                    <th>Category image</th>
-                    <th>Create at</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="row">
+        @foreach ($categories as $category)
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm" style="background-color: #dcdcdc;">
+                    <img src="{{ asset('' . $category->image) }}" class="card-img-top" alt="{{ $category->name }}"style="width: 100%; height: 330px; object-fit: cover;" >
+                    <div class="card-body" style="background-color: #3d9076;">
+                        <h5 class="card-title">{{ $category->name }}</h5>
+                        <p class="card-text">{{ $category->description }}</p>
+                        <p class="card-text"><small class="text-muted">Created At: {{ $category->created_at->format('d M Y, h:i A') }}</small></p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('category.show', ['category' => $category->id]) }}" class="btn btn-info">
+                                <i class="fas fa-eye"></i> Show
+                            </a>
+                            <a href="{{ route('category.edit', ['category' => $category->id]) }}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Update
+                            </a>
+                            <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
                 
-                @foreach ($categories as $category)
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$category->name}}</td>
-                    <td>{{$category->description}}</td>
-                    <td>
-                        <img src="{{asset("$category->image")}}">
-                    </td>
-                    <td>{{$category->created_at->format('d M Y , h:i A')}}</td>
-                    <td>
-                        <a href="{{ route('category.show', ['category' => $category->id]) }}">Show</a>
-                        <a href="{{ route('category.edit', ['category' => $category->id]) }}" class="text-warning">Update</a>
-                        <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="post" style="display:inline;">
-                            @csrf
-                            @method('delete')
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            
-                
-            </tbody>
-            
-        </table>
+         
 
         {{-- <div class="mt-3">
             {{$categories->render()}}
@@ -55,6 +47,3 @@
     </div>
 @endsection
 
-@section('js')
-<script src="{{asset('js/main.js')}}"></script>
-@endsection

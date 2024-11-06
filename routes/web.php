@@ -9,6 +9,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WitterController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,9 @@ Route::get('/dashboard', function () {
 
 
 
+Route::resource('food', FoodController::class);
+Route::resource('order', OrderController::class);
+Route::resource('user', UserController::class);
 
 
 Route::middleware('auth')->group(function () {
@@ -43,16 +47,17 @@ Route::resource('table', TableController::class);
 //************* */
 
 //rout food
-Route::resource('food', FoodController::class);
+
 //************* */
 
 //rout order
-Route::resource('order', OrderController::class);
+
 //************* */
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('login', [AuthController::class, 'handel_login'])->name('login');
 });
 ///middleware admin
 
@@ -70,13 +75,14 @@ Route::group(['middleware' => ['auth']], function () {
          
     Route::get('/', [AuthController::class, 'login'])->name('auth.login');
     
-    Route::post('/login', [AuthController::class, 'handle_login'])->name('auth.handle.login');
+
     
     Route::get('/sign-up', [AuthController::class, 'signup'])->name('auth.signup');
     
     Route::post('/sign-up', [AuthController::class, 'handle_signup'])->name('auth.handle.signup');
-    Route::get('login', [AuthController::class, 'handel_login'])->name('login');
+   
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    // Route::get('login', [AuthController::class, 'handel_login'])->name('login');
 
 });
 

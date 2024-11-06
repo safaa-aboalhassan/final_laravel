@@ -10,17 +10,22 @@
     <x-form.validation-error />
     <x-operation.success />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}"> 
         @csrf
 
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" name="useremail" class="form-control" id="exampleInputEmail1">
+            <label for="useremail" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="useremail" value="{{ old('useremail') }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="userpassword" class="form-control" id="exampleInputPassword1">
+            <label for="userpassword" class="form-label">Password</label>
+            <input type="password" name="password" value="{{ old('userpassword') }}" class="form-control" id="userpassword" required>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember Me</label>
         </div>
 
         <button type="submit" class="btn btn-primary">Login</button>
